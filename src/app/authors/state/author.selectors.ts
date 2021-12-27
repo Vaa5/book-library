@@ -15,6 +15,11 @@ export const getAuthors = createSelector(
   state => state.authors
 );
 
+export const getSelectedAuthor = createSelector(
+  getAuthorFeatureState,
+  state => state.selectedAuthor
+);
+
 // export const getSearchString = createSelector(
 //   getBookFeatureState,
 //   state => state.searchString
@@ -40,7 +45,7 @@ export const getAuthors = createSelector(
 //   state => state.next
 // );
 
-// export const getError = createSelector(
-//   getBookFeatureState,
-//   state => state.error
-// );
+export const getError = createSelector(
+  getAuthorFeatureState,
+  state => state.error
+);

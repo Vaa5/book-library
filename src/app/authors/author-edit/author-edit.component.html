@@ -1,0 +1,43 @@
+<app-busy-indicator [loading]="loading$ | async"></app-busy-indicator>
+<div class="container">
+  <div *ngIf="selectedAuthor$ |async as selectedAuthor">
+    <form novalidate (ngSubmit)="save()" [formGroup]="authorForm">
+
+      <div>
+        <mat-form-field class="name" color="accent" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+          <mat-error>
+            <span *ngIf="authorForm.get('name').errors?.required">
+              Please enter first name
+            </span>
+            <span *ngIf="authorForm.get('name').errors?.minlength">
+              The first name must be longer than 3 characters
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="born" color="accent" appearance="fill">
+          <mat-label>Born</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+
+        <mat-form-field class="bio" color="accent" appearance="fill">
+          <mat-label>Bio</mat-label>
+          <textarea class="bioText" matInput formControlName="description" placeholder="Bio"></textarea>
+        </mat-form-field>
+
+      </div>
+      <div>
+        <button type="submit" mat-raised-button color="accent" [disabled]="!authorForm.valid"
+          [matTooltip]="authorForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -23,25 +23,24 @@
     </mat-icon>
   </button>
 
-  <mat-icon class="title">local_library</mat-icon>
-  <h1>Book Library</h1>
+  <mat-icon color="accent" class="title">local_library</mat-icon>
+  <h1 color="accent">Book Library</h1>
 </mat-toolbar>
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <button [routerLink]="['./books']" mat-button class="menu-button">
+    <button [routerLink]="['./books']" color="accent" mat-button class="menu-button">
       <mat-icon>library_books</mat-icon>
       <span>Books</span>
     </button>
-    <button [routerLink]="['./authors']" routerLinkActive="active" mat-button class="menu-button">
+    <button [routerLink]="['./authors']" color="accent" routerLinkActive="active" mat-button class="menu-button">
       <mat-icon>self_improvement</mat-icon>
       <span>Authors</span>
     </button>
-    <button mat-button class="menu-button">
+    <button mat-button color="accent" class="menu-button">
       <mat-icon>info</mat-icon>
       <span>About</span>
     </button>
-
   </mat-sidenav>
 
   <mat-sidenav-content>

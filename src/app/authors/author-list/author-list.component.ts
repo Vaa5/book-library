@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 import { Author, AuthorState } from '../author.model';
 import * as AuthorActions from '../state/author.actions';
-import { getAuthors } from '../state/author.selectors';
+import { getAuthors, getBusyIndicator } from '../state/author.selectors';
 
 @Component({
   selector: 'app-author-list',
@@ -13,7 +13,7 @@ import { getAuthors } from '../state/author.selectors';
 })
 export class AuthorListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'lastName', 'dateOfBirth', 'description'];
+  displayedColumns: string[] = ['editAuthor', 'name', 'dateOfBirth', 'description'];
   dataSource: MatTableDataSource<Author>;
 
   authors$ = this.store.select(getAuthors).pipe(
@@ -22,10 +22,16 @@ export class AuthorListComponent implements OnInit {
     })
   );
 
+  loading$ = this.store.select(getBusyIndicator);
+
   constructor(private store: Store<AuthorState>) { }
 
   ngOnInit(): void {
     this.store.dispatch(AuthorActions.loadAuthors());
+  }
+
+  deleteAuthor(id: number): void {
+    this.store.dispatch(AuthorActions.deleteAuthor({ id }));
   }
 
 }

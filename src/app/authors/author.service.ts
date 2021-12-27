@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
@@ -16,9 +16,53 @@ export class AuthorService {
   getAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.authorsUrl)
       .pipe(
+        delay(1000),
         catchError(this.handleError)
       );
   }
+
+  getAuthor(id: number): Observable<Author> {
+    if (id === 0) {
+      return of(this.initializeProduct());
+    }
+    const url = `${this.authorsUrl}/${id}`;
+    return this.http.get<Author>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createAuthor(author: Author): Observable<Author> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // Author Id must be null for the Web API to assign an Id
+    const newAuthor = { ...author, id: null };
+    return this.http.post<Author>(this.authorsUrl, newAuthor, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteAuthor(id: number): Observable<{}> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.authorsUrl}/${id}`;
+    return this.http.delete<Author>(url, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateAuthor(author: Author): Observable<Author> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.authorsUrl}/${author.id}`;
+    return this.http.put<Author>(url, author, { headers })
+      .pipe(
+        // Return the product on an update
+        map(() => author),
+        catchError(this.handleError)
+      );
+  }
+
+
 
   // getBooks(): Observable<Result> {
   //   return this.http.get<Result>(this.booksUrl)
@@ -69,6 +113,17 @@ export class AuthorService {
   //   });
   //   return of(searchedBooks);
   // }
+
+  private initializeProduct(): Author {
+    // Return an initialized object
+    return {
+      id: 0,
+      name: null,
+      dateOfBirth: null,
+      description: null
+    };
+  }
+
 
   // tslint:disable-next-line:typedef
   private handleError(err: any) {

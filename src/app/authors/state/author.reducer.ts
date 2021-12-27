@@ -7,7 +7,7 @@ import * as AuthorActions from './author.actions';
 
 const initialState: AuthorState = {
   authors: [],
-  selectedAuthorID: null,
+  selectedAuthor: null,
   loading: false,
   error: '',
 };
@@ -32,6 +32,94 @@ export const AuthorReducer = createReducer<AuthorState>(
     return {
       ...state,
       authors: [],
+      loading: false,
+      error: action.error
+    };
+  }),
+  on(AuthorActions.loadSelectedAuthor, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: true
+    };
+  }),
+  on(AuthorActions.loadSelectedAuthorSuccess, (state, action): AuthorState => {
+    return {
+      ...state,
+      selectedAuthor: action.author,
+      loading: false,
+      error: ''
+    };
+  }),
+  on(AuthorActions.loadSelectedAuthorFailure, (state, action): AuthorState => {
+    return {
+      ...state,
+      selectedAuthor: null,
+      loading: false,
+      error: action.error
+    };
+  }),
+  on(AuthorActions.createAuthor, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: true
+    };
+  }),
+  on(AuthorActions.createAuthorSuccess, (state, action): AuthorState => {
+    return {
+      ...state,
+      selectedAuthor: action.author,
+      authors: [...state.authors, action.author],
+      loading: false,
+      error: ''
+    };
+  }),
+  on(AuthorActions.createAuthorFailure, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error
+    };
+  }),
+  on(AuthorActions.updateAuthor, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: true
+    };
+  }),
+  on(AuthorActions.updateAuthorSuccess, (state, action): AuthorState => {
+    const updatedAuthors = state.authors.map(
+      a => action.author.id === a.id ? action.author : a);
+    return {
+      ...state,
+      authors: updatedAuthors,
+      loading: false,
+      error: ''
+    };
+  }),
+  on(AuthorActions.updateAuthorFailure, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error
+    };
+  }),
+  on(AuthorActions.deleteAuthor, (state, action): AuthorState => {
+    return {
+      ...state,
+      loading: true
+    };
+  }),
+  on(AuthorActions.deleteAuthorSuccess, (state, action): AuthorState => {
+    return {
+      ...state,
+      authors: state.authors.filter(author => author.id !== action.id),
+      loading: false,
+      error: ''
+    };
+  }),
+  on(AuthorActions.deleteAuthorFailure, (state, action): AuthorState => {
+    return {
+      ...state,
       loading: false,
       error: action.error
     };

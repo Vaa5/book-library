@@ -30,6 +30,58 @@ export class AuthorEffects {
       );
   });
 
+  loadAuthor$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(AuthorActions.loadSelectedAuthor),
+        mergeMap((action) => this.authorService.getAuthor(action.id)
+          .pipe(
+            map(author => AuthorActions.loadSelectedAuthorSuccess({ author })),
+            catchError(error => of(AuthorActions.loadSelectedAuthorFailure({ error })))
+          )
+        )
+      );
+  });
+
+  createAuthor$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(AuthorActions.createAuthor),
+        mergeMap((action) => this.authorService.createAuthor(action.author)
+          .pipe(
+            map(author => AuthorActions.createAuthorSuccess({ author })),
+            catchError(error => of(AuthorActions.createAuthorFailure({ error })))
+          )
+        )
+      );
+  });
+
+  updateAuthor$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(AuthorActions.updateAuthor),
+        mergeMap((action) => this.authorService.updateAuthor(action.author)
+          .pipe(
+            map(author => AuthorActions.updateAuthorSuccess({ author })),
+            catchError(error => of(AuthorActions.updateAuthorFailure({ error })))
+          )
+        )
+      );
+  });
+
+  deleteAuthor$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(AuthorActions.deleteAuthor),
+        mergeMap((action) => this.authorService.deleteAuthor(action.id)
+          .pipe(
+            map(author => AuthorActions.deleteAuthorSuccess({ id: action.id })),
+            catchError(error => of(AuthorActions.deleteAuthorFailure({ error })))
+          )
+        )
+      );
+  });
+
   // loadMoreBooks$ = createEffect(() => {
   //   return this.actions$
   //     .pipe(

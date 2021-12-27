@@ -1,11 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../shared/material.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BusyIndicatorComponent } from './busy-indicator/busy-indicator.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { HttpRequestInterceptor } from './interceptors/http-request-interceptor';
 import { AppRoutingModule } from '../app-routing.module';
 
 // tslint:disable-next-line:typedef
@@ -17,12 +15,12 @@ export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
 }
 
 @NgModule({
-  declarations: [ToolbarComponent, BusyIndicatorComponent],
+  declarations: [ToolbarComponent],
   imports: [
     CommonModule, AppRoutingModule, MaterialModule
   ],
-  exports: [BrowserAnimationsModule, HttpClientModule, AppRoutingModule, ToolbarComponent, BusyIndicatorComponent],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }]
+  exports: [BrowserAnimationsModule, HttpClientModule, AppRoutingModule, ToolbarComponent],
+  providers: []
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

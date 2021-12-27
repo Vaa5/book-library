@@ -10,13 +10,17 @@ import { AuthorEffects } from './state/author.effects';
 import { MaterialModule } from '../shared/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthorListComponent } from './author-list/author-list.component';
+import { AuthorEditComponent } from './author-edit/author-edit.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    AuthorListComponent],
+    AuthorListComponent,
+    AuthorEditComponent],
   imports: [
     CommonModule,
+    SharedModule,
     AuthorsRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
