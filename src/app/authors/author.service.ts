@@ -23,7 +23,7 @@ export class AuthorService {
 
   getAuthor(id: number): Observable<Author> {
     if (id === 0) {
-      return of(this.initializeProduct());
+      return of(this.initializeAuthor());
     }
     const url = `${this.authorsUrl}/${id}`;
     return this.http.get<Author>(url)
@@ -114,7 +114,7 @@ export class AuthorService {
   //   return of(searchedBooks);
   // }
 
-  private initializeProduct(): Author {
+  private initializeAuthor(): Author {
     // Return an initialized object
     return {
       id: 0,

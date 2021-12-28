@@ -13,7 +13,7 @@ import { getAuthors, getBusyIndicator } from '../state/author.selectors';
 })
 export class AuthorListComponent implements OnInit {
 
-  displayedColumns: string[] = ['editAuthor', 'name', 'dateOfBirth', 'description'];
+  displayedColumns: string[] = ['actions', 'name', 'dateOfBirth', 'description'];
   dataSource: MatTableDataSource<Author>;
 
   authors$ = this.store.select(getAuthors).pipe(

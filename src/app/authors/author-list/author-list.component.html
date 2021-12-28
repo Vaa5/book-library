@@ -7,7 +7,7 @@
   <div *ngIf="authors$ | async as authors">
     <table mat-table [dataSource]="dataSource" color="accent" class="mat-elevation-z8">
       <!-- Checkbox Column -->
-      <ng-container matColumnDef="editAuthor">
+      <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let author">
           <button mat-icon-button color="accent" (click)="deleteAuthor(author.id)" [matTooltip]="Delete">

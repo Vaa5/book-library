@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // tslint:disable-next-line:typedef
 export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
@@ -15,11 +16,11 @@ export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
 }
 
 @NgModule({
-  declarations: [ToolbarComponent],
+  declarations: [ToolbarComponent, PageNotFoundComponent],
   imports: [
     CommonModule, AppRoutingModule, MaterialModule
   ],
-  exports: [BrowserAnimationsModule, HttpClientModule, AppRoutingModule, ToolbarComponent],
+  exports: [BrowserAnimationsModule, HttpClientModule, AppRoutingModule, ToolbarComponent, PageNotFoundComponent],
   providers: []
 })
 export class CoreModule {
