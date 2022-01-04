@@ -1,12 +1,12 @@
 /* NgRx */
 import { createReducer, on } from '@ngrx/store';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 import { BookState } from '../book.model';
 import * as BookActions from './book.actions';
 
 
 const initialState: BookState = {
   books: [],
-  categories: [],
   selectedBook: null,
   loading: false,
   error: '',

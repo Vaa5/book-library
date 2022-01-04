@@ -15,27 +15,26 @@ import { tap } from 'rxjs/operators';
 })
 export class BookListComponent implements OnInit {
 
-  displayedColumns: string[] = ['actions', 'bookName', 'bookPublishDate', 'bookPublisher', 'description'];
+  displayedColumns: string[] = ['actions', 'title', 'bookPublishDate', 'bookPublisher', 'description'];
   dataSource: MatTableDataSource<Book>;
 
 
-  books$ = this.store.select(getBooks).pipe(
+  books$ = this.bookStore.select(getBooks).pipe(
     tap((books) => {
-      console.log(books);
       this.dataSource = new MatTableDataSource<Book>(books);
     })
   );
 
-  loading$ = this.store.select(getBusyIndicator);
+  loading$ = this.bookStore.select(getBusyIndicator);
 
-  constructor(private store: Store<BookState>) { }
+  constructor(private bookStore: Store<BookState>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(BookActions.loadBooks());
+    this.bookStore.dispatch(BookActions.loadBooks());
   }
 
   deleteBook(id: number): void {
-    this.store.dispatch(BookActions.deleteBook({ id }));
+    this.bookStore.dispatch(BookActions.deleteBook({ id }));
   }
 
 }

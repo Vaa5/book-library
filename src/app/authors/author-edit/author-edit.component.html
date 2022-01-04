@@ -2,7 +2,6 @@
 <div class="container">
   <div *ngIf="selectedAuthor$ |async as selectedAuthor">
     <form novalidate (ngSubmit)="save()" [formGroup]="authorForm">
-
       <div>
         <mat-form-field class="name" color="accent" appearance="fill">
           <mat-label>Name</mat-label>

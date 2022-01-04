@@ -10,12 +10,15 @@ import { BookService } from '../book.service';
 import * as BookActions from './book.actions';
 import { Store } from '@ngrx/store';
 import { BookState } from '../book.model';
+import { SharedState } from 'src/app/shared/state/shared.model';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 
 @Injectable()
 export class BookEffects {
 
-  constructor(private actions$: Actions, private bookService: BookService, private store: Store<BookState>) { }
+  constructor(private actions$: Actions, private bookService: BookService,
+              private store: Store<BookState>, private sharedStore: Store<SharedState>) { }
 
   loadBooks$ = createEffect(() => {
     return this.actions$
@@ -36,6 +39,9 @@ export class BookEffects {
         ofType(BookActions.loadSelectedBook),
         mergeMap((action) => this.bookService.getBook(action.id)
           .pipe(
+            tap(() => {
+              this.sharedStore.dispatch(SharedActions.loadAuthors());
+              this.sharedStore.dispatch(SharedActions.loadCategories()); }),
             map(book => BookActions.loadSelectedBookSuccess({ book })),
             catchError(error => of(BookActions.loadSelectedBookFailure({ error })))
           )

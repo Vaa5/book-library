@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
-import { Author, AuthorState } from '../author.model';
+import { tap } from 'rxjs/operators';
+import { Author } from 'src/app/shared/state/shared.model';
+import { AuthorState } from '../author.model';
+
 import * as AuthorActions from '../state/author.actions';
 import { getBusyIndicator, getError, getSelectedAuthor } from '../state/author.selectors';
-
 
 @Component({
   selector: 'app-author-edit',
@@ -41,17 +41,13 @@ export class AuthorEditComponent implements OnInit {
 
     this.authorForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      dateOfBirth: [new Date(), [Validators.required, Validators.maxLength(50)]],
+      dateOfBirth: [new Date(), [Validators.required]],
       description: ''
     });
-
 
     this.route.params.subscribe(params => {
       if (params.id) {
         this.store.dispatch(AuthorActions.loadSelectedAuthor({ id: +params.id }));
-        // this.selectedAuthor$ = this.store.select(getAuthors).pipe(
-        //   map(a => a.find(author => author.id === +params.id)),
-        // );
       }
     });
   }

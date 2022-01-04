@@ -1,6 +1,7 @@
 import * as AppState from '../../state/app.state';
-import { BookState } from '../book.model';
+import { SharedState } from './shared.model';
+
 
 export interface State extends AppState.State {
-  books: BookState;
+  shared: SharedState;
 }

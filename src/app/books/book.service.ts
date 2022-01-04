@@ -15,7 +15,6 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
   getBooks(): Observable<Book[]> {
-    console.log('dsadsasadsda');
     return this.http.get<Book[]>(this.booksUrl)
       .pipe(
         catchError(this.handleError)
@@ -68,12 +67,12 @@ export class BookService {
     // Return an initialized object
     return {
       id: 0,
-      bookName: '',
+      title: '',
       description: '',
       bookPublisher: '',
       bookPublishDate: null,
-      authorIDs: [],
-      categoryIDS: [],
+      authors: [],
+      categories: [],
       languages: []
     };
   }

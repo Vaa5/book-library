@@ -10,40 +10,10 @@ export const getBusyIndicator = createSelector(
   state => state.loading
 );
 
-export const getAuthors = createSelector(
-  getAuthorFeatureState,
-  state => state.authors
-);
-
 export const getSelectedAuthor = createSelector(
   getAuthorFeatureState,
   state => state.selectedAuthor
 );
-
-// export const getSearchString = createSelector(
-//   getBookFeatureState,
-//   state => state.searchString
-// );
-
-// export const getSearchedBooks = createSelector(
-//   getBookFeatureState,
-//   state => state.searchedBooks
-// );
-
-// export const getshowBookCover = createSelector(
-//   getBookFeatureState,
-//   state => state.showBookCover
-// );
-
-// export const getSelectedBook = createSelector(
-//   getBookFeatureState,
-//   state => state.selectedBook
-// );
-
-// export const getNextBooksURL = createSelector(
-//   getBookFeatureState,
-//   state => state.next
-// );
 
 export const getError = createSelector(
   getAuthorFeatureState,

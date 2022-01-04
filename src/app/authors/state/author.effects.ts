@@ -10,25 +10,13 @@ import { AuthorService } from '../author.service';
 import * as AuthorActions from './author.actions';
 import { Store } from '@ngrx/store';
 import { AuthorState } from '../author.model';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 
 @Injectable()
 export class AuthorEffects {
 
   constructor(private actions$: Actions, private authorService: AuthorService, private store: Store<AuthorState>) { }
-
-  loadAuthors$ = createEffect(() => {
-    return this.actions$
-      .pipe(
-        ofType(AuthorActions.loadAuthors),
-        mergeMap(() => this.authorService.getAuthors()
-          .pipe(
-            map(authors => AuthorActions.loadAuthorsSuccess({ authors })),
-            catchError(error => of(AuthorActions.loadAuthorsFailure({ error })))
-          )
-        )
-      );
-  });
 
   loadAuthor$ = createEffect(() => {
     return this.actions$
@@ -62,7 +50,7 @@ export class AuthorEffects {
         ofType(AuthorActions.updateAuthor),
         mergeMap((action) => this.authorService.updateAuthor(action.author)
           .pipe(
-            map(author => AuthorActions.updateAuthorSuccess({ author })),
+            map(author => SharedActions.updateAuthorSuccess({ author })),
             catchError(error => of(AuthorActions.updateAuthorFailure({ error })))
           )
         )
@@ -75,98 +63,11 @@ export class AuthorEffects {
         ofType(AuthorActions.deleteAuthor),
         mergeMap((action) => this.authorService.deleteAuthor(action.id)
           .pipe(
-            map(author => AuthorActions.deleteAuthorSuccess({ id: action.id })),
+            map(author => SharedActions.deleteAuthorSuccess({ id: action.id })),
             catchError(error => of(AuthorActions.deleteAuthorFailure({ error })))
           )
         )
       );
   });
-
-  // loadMoreBooks$ = createEffect(() => {
-  //   return this.actions$
-  //     .pipe(
-  //       ofType(BookActions.loadMoreBooks),
-  //       withLatestFrom(this.store.select(getNextBooksURL).pipe(
-  //         filter(url => !!url)
-  //       )),
-  //       mergeMap(([action, nextBookUrl]) => this.bookService.getMoreBooks(nextBookUrl)
-  //         .pipe(
-  //           map(result => BookActions.loadMoreBooksSuccess({ result })),
-  //           catchError(error => of(BookActions.loadMoreBooksFailure({ error })))
-  //         )
-  //       )
-  //     );
-  // });
-
-  // loadSelectedBook$ = createEffect(() => {
-  //   return this.actions$
-  //     .pipe(
-  //       ofType(BookActions.loadSelectedBook),
-  //       switchMap((action) => this.bookService.getBook(action.id)
-  //         .pipe(
-  //           map(selectedBook => BookActions.loadSelectedBookSuccess({ selectedBook })),
-  //           catchError(error => of(BookActions.loadSelectedBookFailure({ error })))
-  //         )
-  //       )
-  //     );
-  // });
-
-  // searchBooks$ = createEffect(() => {
-  //   return this.actions$
-  //     .pipe(
-  //       ofType(BookActions.searchBooks),
-  //       withLatestFrom(this.store.select(getBooks).pipe(
-  //         filter(books => !!books.length)
-  //       )),
-  //       mergeMap(([action, books]) => {
-  //         const searchedBooks = books.filter(b => {
-  //           const tsa = b.title.toLocaleLowerCase().includes(action.searchString.toLocaleLowerCase());
-  //           return tsa;
-  //         });
-  //         return of(searchedBooks);
-  //       })
-  //       , map((searchedBooks) => BookActions.searchBooksFinished({ searchedBooks }))
-
-  //     );
-  // });
-
-  // // getSearchedBooks$ = createEffect(() => {
-  // //   return this.actions$
-  // //     .pipe(
-  // //       ofType(BookActions.searchBook),
-  // //       withLatestFrom(this.store.select(getBooks)),
-  // //       switchMap(([action, books]) =>
-  // //         of({ searchString: action.searchString, books })
-  // //           .pipe(
-  // //             // filter((param) => param.books.filter(b => b.title.includes(param.searchString))),
-  // //             map((param) => {
-  // //               const searchedBooks = param.searchString ?
-  // //                 param.books.filter(book => {
-  // //                   return book.title.toLowerCase().includes(param.searchString.toLowerCase());
-  // //                 })
-  // //                 : param.books;
-  // //               return BookActions.searchBooksFinished({ searchedBooks, searchString: param.searchString });
-  // //             }))
-  // //       ));
-  // // });
-
-  // // getSearchedBooks$ = createEffect(() => {
-  // //   return this.actions$
-  // //     .pipe(
-  // //       ofType(BookActions.searchBook),
-  // //       withLatestFrom(this.store.select(getBooks)),
-  // //       switchMap(([action, books]) =>
-  // //         of({ searchString: action.searchString, books })
-  // //           .pipe(
-  // //             map((param) => {
-  // //               const searchedBooks = param.searchString ?
-  // //                 param.books.filter(book => {
-  // //                   return book.title.toLowerCase().indexOf(param.searchString.toLowerCase()) === ;
-  // //                 })
-  // //                 : param.books;
-  // //               return BookActions.searchBooksFinished({ searchedBooks, searchString: param.searchString });
-  // //             }))
-  // //       ));
-  // // });
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Author } from './authors/author.model';
-import { Book, Category } from './books/book.model';
+import { Book } from './books/book.model';
+import { Author, Category } from './shared/state/shared.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,39 +31,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    const books: Book[] = [
-      {
-        id: 1,
-        bookName: 'Karlsson on the Roof',
-        bookPublisher: '',
-        bookPublishDate: new Date('01/01/1955'),
-        description: 'Karlsson-on-the-Roof is a character who figures in a series of children\'s books by the Swedish author Astrid Lindgren.Translated books and cartoon adaptation of the series became popular in the Soviet Union when it was released in the 1970s.Lindgren may have borrowed the idea for the series from a similar story about Mr.O\'Malley in the comic strip "Barnaby" (1942) by Crockett Johnson.',
-        authorIDs: [1],
-        categoryIDS: [1, 2],
-        languages: ['Swedish']
-      },
-      {
-        id: 2,
-        bookName: 'Shadows in Paradise',
-        bookPublisher: 'Harcourt Brace',
-        bookPublishDate: new Date('01/01/1971'),
-        description: 'Shadows in Paradise is a 1971 novel by Erich Maria Remarque. It is about a journalist, Robert Ross, who spent two years evading the Holocaust hiding in an art museum, flees from Europe to the United States and settles in New York. He meets a woman named Natasha, begins new career as an art dealer and travels to Hollywood. After the war is over, Ross eventually leaves the States. The book was cited for having a tone of "lambent gray romanticism".',
-        authorIDs: [2],
-        categoryIDS: [2, 4],
-        languages: ['German']
-      },
-      {
-        id: 3,
-        bookName: 'Men Without Women',
-        bookPublisher: 'Charles Scribner\'s Sons',
-        bookPublishDate: new Date('01/01/1927'),
-        description: 'Men Without Women is the second collection of short stories written by American author Ernest Hemingway (July 21, 1899 – July 2, 1961). The volume consists of 14 stories, 10 of which had been previously published in magazines. It was published in October 1927, with a first print-run of approximately 7600 copies at $2.',
-        authorIDs: [3],
-        categoryIDS: [2],
-        languages: ['English']
-      }
-    ];
-
     const categories: Category[] = [
       {
         id: 1,
@@ -85,6 +53,41 @@ export class DataService implements InMemoryDbService {
         categoryOverview: '"Fiction" refers to literature created from the imagination. Mysteries, science fiction, romance, fantasy, chick lit, crime thrillers are all fiction genres. ... Our Fiction Department also has a large selection of popular movies and television shows on DVD. "Nonfiction" refers to literature based in fact.'
       }
     ];
+
+    const books: Book[] = [
+      {
+        id: 1,
+        title: 'Karlsson on the Roof',
+        bookPublisher: '',
+        bookPublishDate: new Date('01/01/1955'),
+        description: 'Karlsson-on-the-Roof is a character who figures in a series of children\'s books by the Swedish author Astrid Lindgren.Translated books and cartoon adaptation of the series became popular in the Soviet Union when it was released in the 1970s.Lindgren may have borrowed the idea for the series from a similar story about Mr.O\'Malley in the comic strip "Barnaby" (1942) by Crockett Johnson.',
+        authors: [authors[0]],
+        categories: [categories[0], categories[1]],
+        languages: ['Swedish']
+      },
+      {
+        id: 2,
+        title: 'Shadows in Paradise',
+        bookPublisher: 'Harcourt Brace',
+        bookPublishDate: new Date('01/01/1971'),
+        description: 'Shadows in Paradise is a 1971 novel by Erich Maria Remarque. It is about a journalist, Robert Ross, who spent two years evading the Holocaust hiding in an art museum, flees from Europe to the United States and settles in New York. He meets a woman named Natasha, begins new career as an art dealer and travels to Hollywood. After the war is over, Ross eventually leaves the States. The book was cited for having a tone of "lambent gray romanticism".',
+        authors: [authors[1]],
+        categories: [categories[1], categories[3]],
+        languages: ['German']
+      },
+      {
+        id: 3,
+        title: 'Men Without Women',
+        bookPublisher: 'Charles Scribner\'s Sons',
+        bookPublishDate: new Date('01/01/1927'),
+        description: 'Men Without Women is the second collection of short stories written by American author Ernest Hemingway (July 21, 1899 – July 2, 1961). The volume consists of 14 stories, 10 of which had been previously published in magazines. It was published in October 1927, with a first print-run of approximately 7600 copies at $2.',
+        authors: [authors[2]],
+        categories: [categories[1]],
+        languages: ['English']
+      }
+    ];
+
+
 
     return {
       authors, books, categories

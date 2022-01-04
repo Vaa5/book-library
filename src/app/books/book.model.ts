@@ -1,24 +1,19 @@
+import { Author, Category } from '../shared/state/shared.model';
+
 export interface Book {
   id: number | null;
-  bookName: string;
+  title: string;
   description: string;
   bookPublisher: string;
   bookPublishDate: Date;
-  authorIDs: number[];
-  categoryIDS: number[];
+  authors: Author[];
+  categories: Category[];
   languages: string[];
-}
-
-export interface Category {
-  id: number | null;
-  categoryName: string;
-  categoryOverview: string;
 }
 
 // State for this feature (Book)
 export interface BookState {
   books: Book[];
-  categories: Category[];
   selectedBook: Book | null;
   loading: boolean;
   error: string;
